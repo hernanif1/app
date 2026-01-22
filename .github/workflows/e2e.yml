@@ -52,4 +52,3 @@ jobs:
           base_url: 'http://localhost:4173'
           test_command: 'npm run test:e2e'
           report_path: 'playwright-report'
-          dist_path: 'dist'
