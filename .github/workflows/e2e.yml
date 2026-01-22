@@ -30,9 +30,6 @@ jobs:
             npm install
           fi
       
-      - name: Build application
-        run: |
-          npm run build
       
       - name: Start built application
         run: |
