@@ -1,0 +1,30 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches: [ main, master ]
+  push:
+    branches: [ main, master ]
+
+permissions:
+  contents: write
+  pages: write
+  pull-requests: write
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Run e2e tests and deploy
+        uses: hernanif1/action@main
+        with:
+          base_url: 'http://localhost:5173'
+          test_command: 'npm run test:e2e'
+          report_path: 'playwright-report'
