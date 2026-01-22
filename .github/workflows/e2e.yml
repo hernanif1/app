@@ -30,6 +30,9 @@ jobs:
             npm install
           fi
       
+      - name: Build application
+        run: |
+          npm run build
       
       - name: Start built application
         run: |
@@ -47,4 +50,6 @@ jobs:
         uses: hernanif1/action@main
         with:
           base_url: 'http://localhost:4173'
-            sleep 1
+          test_command: 'npm run test:e2e'
+          report_path: 'playwright-report'
+          dist_path: 'dist'
