@@ -10,6 +10,7 @@ permissions:
   contents: write
   pages: write
   pull-requests: write
+  id-token: write
 
 jobs:
   e2e:
@@ -22,9 +23,33 @@ jobs:
           node-version: '20'
           cache: 'npm'
       
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+      
+      - name: Build application
+        run: |
+          npm run build
+      
+      - name: Start built application
+        run: |
+          npx vite preview --host 0.0.0.0 --port 4173 &
+          # Wait for the preview server to be ready
+          for i in {1..30}; do
+            if curl -f http://localhost:4173 > /dev/null 2>&1; then
+              echo "Preview server is ready"
+              break
+            fi
+            sleep 1
+          done
+      
       - name: Run e2e tests and deploy
         uses: hernanif1/action@main
         with:
-          base_url: 'http://localhost:5173'
+          base_url: 'http://localhost:4173'
           test_command: 'npm run test:e2e'
           report_path: 'playwright-report'

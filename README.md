@@ -2,6 +2,10 @@
 
 Minimal React app with Playwright e2e tests.
 
+## Testing PR Comments
+
+This branch is for testing PR comment functionality.
+
 ## Setup
 
 ```bash
